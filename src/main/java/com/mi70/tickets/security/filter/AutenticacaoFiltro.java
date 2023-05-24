@@ -21,24 +21,28 @@ public class AutenticacaoFiltro extends OncePerRequestFilter {
     private final JwtUtils jwtUtils = new JwtUtils();
     private JpaService jpaService;
 
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
             String token = cookieUtils.getTokenCookie(request);
             jwtUtils.validarToken(token);
+
+//            if (token == null && validarUrl(request.getRequestURI(), request.getMethod()) == true) {
+//                System.out.println("Deixa fazer a requisição");
+//            }
+
             UserDetails user = jpaService.loadUserByUsername(jwtUtils.getUsername(token));
+
             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                     new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), user.getAuthorities());
+
             SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
         } catch (Exception e) {
-            // Adicionar aviso de entrada no primeiro catch
             System.out.println("Primeiro catch");
             try {
                 // Validar url
                 validarUrl(request.getRequestURI(), request.getMethod());
             } catch (Exception ex) {
-                // Aviso de entrada no segundo catch
                 System.out.println("Segundo catch");
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             }
@@ -48,10 +52,12 @@ public class AutenticacaoFiltro extends OncePerRequestFilter {
     }
 
     private void validarUrl(String url, String metod) {
-        if (url.equals("/api/login")
+        if (!(url.equals("/api/login")
                 || url.equals("/login")
                 || url.equals("/api/login/auth")
-                || url.equals("/login/auth")) {
+                || url.equals("/login/auth")
+                || url.equals("/api/ticket")
+                || url.equals("/ticket"))) {
             throw new RuntimeException();
         } else {
             System.out.println("URL validada.");

@@ -5,10 +5,12 @@ import com.mi70.tickets.model.entity.Ticket;
 import com.mi70.tickets.repository.TicketRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @AllArgsConstructor
+@Service
 public class TicketService implements ServiceInterface<Ticket, TicketDTO, Long> {
 
     private TicketRepository ticketRepository;

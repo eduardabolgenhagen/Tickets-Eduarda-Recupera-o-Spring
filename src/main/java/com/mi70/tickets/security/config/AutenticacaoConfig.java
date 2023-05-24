@@ -36,22 +36,22 @@ public class AutenticacaoConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of("/**"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
-        configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
-
+        configuration.setAllowedHeaders(List.of("*"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
 
+
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests()
-                .requestMatchers(HttpMethod.POST, "/api/login", "/login").permitAll()
+                .requestMatchers("/api/login", "/login").permitAll()
 
                 // TICKET
                 // SEM LOGIN
-                .requestMatchers(HttpMethod.GET, "/api/ticket", "/ticket", "/ticket/*").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/ticket/**", "/ticket/**", "/ticket/*").permitAll()
                 // COM LOGIN
                 .requestMatchers(HttpMethod.POST, "/api/ticket", "/ticket")
                 .hasAnyAuthority("USUARIO", "JUNIOR", "PLENO", "SENIOR", "ADMINISTRADOR")
@@ -88,10 +88,11 @@ public class AutenticacaoConfig {
                 .requestMatchers(HttpMethod.GET, "/api/endereco", "/endereco/", "/endereco/*")
                 .hasAnyAuthority("USUARIO", "JUNIOR", "PLENO", "SENIOR", "ADMINISTRADOR")
                 .requestMatchers(HttpMethod.DELETE, "/api/endereco", "/endereco")
-                .hasAuthority("ADMINISTRADOR");
+                .hasAuthority("ADMINISTRADOR")
+                .anyRequest().authenticated();
 
-        httpSecurity.cors().configurationSource(corsConfigurationSource());
         httpSecurity.csrf().disable();
+        httpSecurity.cors().configurationSource(corsConfigurationSource());
         httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().addFilterBefore(new AutenticacaoFiltro(jpaService), UsernamePasswordAuthenticationFilter.class);
 

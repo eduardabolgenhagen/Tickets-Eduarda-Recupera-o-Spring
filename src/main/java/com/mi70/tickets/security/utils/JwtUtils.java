@@ -14,7 +14,7 @@ public class JwtUtils {
                 .setIssuer("Tickets")
                 .setSubject(userJpa.getUsername())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(new Date().getTime() + 6000))
+                .setExpiration(new Date(new Date().getTime() + 60000))
                 .signWith(SignatureAlgorithm.HS256, senhaForte)
                 .compact();
     }
@@ -22,7 +22,6 @@ public class JwtUtils {
     public void validarToken(String token) {
         try {
             Jwts.parser().setSigningKey(senhaForte).parseClaimsJws(token);
-            System.out.println("Token validado");
         } catch (Exception e) {
             throw new RuntimeException();
         }

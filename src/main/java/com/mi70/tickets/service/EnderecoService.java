@@ -5,10 +5,12 @@ import com.mi70.tickets.model.entity.Endereco;
 import com.mi70.tickets.repository.EnderecoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @AllArgsConstructor
+@Service
 public class EnderecoService implements ServiceInterface<Endereco, EnderecoDTO, Long> {
 
     private EnderecoRepository enderecoRepository;

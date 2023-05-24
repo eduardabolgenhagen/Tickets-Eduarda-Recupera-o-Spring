@@ -7,9 +7,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @AllArgsConstructor
 @RequestMapping("/endereco")
+@RestController
 public class EnderecoController implements ControllerInterface<EnderecoDTO, Long>{
 
     private EnderecoService comentarioService;

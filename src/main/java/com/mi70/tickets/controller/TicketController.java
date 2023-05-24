@@ -7,9 +7,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @AllArgsConstructor
 @RequestMapping("/ticket")
+@RestController
 public class TicketController implements ControllerInterface<TicketDTO, Long>{
 
     private TicketService ticketService;

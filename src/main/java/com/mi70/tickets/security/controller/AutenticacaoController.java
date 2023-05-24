@@ -12,10 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/login")
@@ -25,6 +22,7 @@ public class AutenticacaoController {
     private AuthenticationManager authenticationManager;
     private final CookieUtils cookieUtils = new CookieUtils();
 
+    @PostMapping
     public ResponseEntity<Object> autenticacao(@RequestBody UsuarioDTO usuarioDTO, HttpServletResponse response) {
         try {
             UsernamePasswordAuthenticationToken authenticationToken =

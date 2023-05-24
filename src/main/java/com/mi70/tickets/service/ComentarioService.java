@@ -5,10 +5,12 @@ import com.mi70.tickets.model.entity.Comentario;
 import com.mi70.tickets.repository.ComentarioRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @AllArgsConstructor
+@Service
 public class ComentarioService implements ServiceInterface<Comentario, ComentarioDTO, Long> {
 
     private ComentarioRepository comentarioRepository;

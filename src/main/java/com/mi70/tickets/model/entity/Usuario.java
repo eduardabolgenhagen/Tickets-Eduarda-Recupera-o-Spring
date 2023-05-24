@@ -21,4 +21,5 @@ public class Usuario {
     @ManyToOne
     private Endereco endereco;
     private Double salario;
+    private String perfil;
 }

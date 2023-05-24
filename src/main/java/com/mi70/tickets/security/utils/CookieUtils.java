@@ -12,7 +12,7 @@ public class CookieUtils {
         String token = jwtUtils.gerarToken(userJpa);
         Cookie cookie = new Cookie("token", token);
         cookie.setPath("/");
-        cookie.setMaxAge(60);
+        cookie.setMaxAge(60000);
 
         return cookie;
     }
